@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom'
 
+import { env } from '@/shared/config/env'
+
 export function AppFooter() {
   return (
     <footer className="border-surface-3 bg-surface-2/80 border-t">
       <div className="text-muted mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-8 text-sm sm:flex-row sm:items-center sm:justify-between">
-        <p>© {new Date().getFullYear()} Front Wireframe. 모든 권리 보유.</p>
+        <p>
+          © {new Date().getFullYear()} {env.appName}
+        </p>
         <div className="flex flex-wrap items-center gap-4">
           <Link to="/docs/accessibility" className="hover:text-primary">
             접근성 정책

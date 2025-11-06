@@ -26,9 +26,9 @@ export function AppHeader() {
             <Menu className="h-6 w-6" />
           </span>
           <div className="flex flex-col">
-            <span className="text-primary text-sm font-semibold uppercase tracking-wider">
+            {/* <span className="text-primary text-sm font-semibold uppercase tracking-wider">
               Front Wireframe
-            </span>
+            </span> */}
             <span className="text-foreground text-base font-medium">{appName}</span>
           </div>
         </Link>

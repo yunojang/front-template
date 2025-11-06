@@ -12,6 +12,10 @@ describe('AppRouter', () => {
       </AppProviders>,
     )
 
-    expect(await screen.findByText(/더빙 파이프라인을 누구나/i)).toBeInTheDocument()
+    expect(
+      await screen.findByRole('heading', {
+        name: /AI 기반 자동 더빙으로 글로벌 콘텐츠를 만드세요/i,
+      }),
+    ).toBeInTheDocument()
   })
 })

@@ -107,13 +107,13 @@ export function LoginForm() {
         <Link to={routes.signup} className="text-primary font-medium hover:underline">
           회원가입으로 이동
         </Link>
-        <button
+        {/* <button
           type="button"
           className="text-muted hover:text-primary text-sm"
           onClick={() => trackEvent('login_forgot_password_click')}
         >
           비밀번호 찾기
-        </button>
+        </button> */}
       </div>
     </form>
   )

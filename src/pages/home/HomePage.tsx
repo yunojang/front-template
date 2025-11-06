@@ -8,30 +8,33 @@ import { trackEvent } from '../../shared/lib/analytics'
 import { useAuthStore } from '../../shared/store/useAuthStore'
 import { Button } from '../../shared/ui/Button'
 import { Card, CardDescription, CardHeader, CardTitle } from '../../shared/ui/Card'
-import { TabsContent, TabsList, TabsRoot, TabsTrigger } from '../../shared/ui/Tabs'
+import { ToggleGroup, ToggleGroupItem } from '../../shared/ui/ToggleGroup'
 import WorkspacePage from '../workspace/WorkspacePage'
 
 type SampleLanguage = 'ko' | 'ja' | 'es'
 
-const samples: Record<SampleLanguage, { label: string; waveColor: string }> = {
-  ko: { label: '한국어', waveColor: 'from-purple-500 to-blue-500' },
-  ja: { label: '日本語', waveColor: 'from-rose-500 to-amber-500' },
-  es: { label: 'Español', waveColor: 'from-cyan-500 to-emerald-500' },
-}
-
-function SampleVideoMock({ language }: { language: SampleLanguage }) {
-  const gradient = samples[language].waveColor
-  return (
-    <div className="border-surface-3 bg-surface-1 relative overflow-hidden rounded-3xl border">
-      <div className={`h-48 bg-gradient-to-br ${gradient} opacity-80`} />
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-white">
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-black/40 backdrop-blur">
-          <Play className="h-8 w-8" />
-        </div>
-        <p className="text-sm font-medium">샘플 영상 프리뷰 (모의)</p>
-      </div>
-    </div>
-  )
+const samples: Record<
+  SampleLanguage,
+  { label: string; caption: string; gradient: string; transcript: string }
+> = {
+  ko: {
+    label: '한국어',
+    caption: '자연스러운 한국어 더빙 음성으로 글로벌 온보딩을 돕습니다.',
+    gradient: 'from-purple-500 via-blue-500 to-emerald-500',
+    transcript: 'AI 파이프라인을 통해 30분 만에 한국어 음성을 합성한 결과입니다.',
+  },
+  ja: {
+    label: '日本語',
+    caption: '원문 뉘앙스를 살린 일본어 음성으로 현지화를 빠르게 진행하세요.',
+    gradient: 'from-rose-500 via-amber-500 to-violet-500',
+    transcript: '현지화 팀이 선호하는 일본어 발음 규칙을 반영해 합성했습니다.',
+  },
+  es: {
+    label: 'Español',
+    caption: '중남미 시장에서 바로 사용할 수 있는 라틴 스페인어 억양입니다.',
+    gradient: 'from-cyan-500 via-sky-500 to-green-500',
+    transcript: '라틴 스페인어 억양을 적용해 글로벌 진출을 돕습니다.',
+  },
 }
 
 export default function HomePage() {
@@ -42,74 +45,101 @@ export default function HomePage() {
     return <WorkspacePage />
   }
 
+  const activeSample = samples[language]
+
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-16 px-6 py-16">
-      <section className="grid gap-10 lg:grid-cols-[1.1fr,0.9fr] lg:items-center">
-        <div className="space-y-6">
-          <span className="border-surface-4 bg-surface-2 text-muted inline-flex items-center rounded-full border px-4 py-1 text-xs font-medium uppercase tracking-wider">
-            원본 → 선택 언어 더빙 영상
-          </span>
-          <h1 className="text-foreground text-4xl font-semibold tracking-tight md:text-5xl">
-            더빙 파이프라인을 누구나 30분 만에 세팅할 수 있도록 돕습니다
+      <section className="space-y-10 lg:space-y-14">
+        <div className="space-y-6 text-center">
+          <h1 className="text-foreground text-balance text-4xl font-semibold leading-tight md:text-5xl">
+            AI 기반 자동 더빙으로 <br className="hidden md:inline" />
+            글로벌 콘텐츠를 만드세요
           </h1>
           <p className="text-muted text-lg leading-relaxed">
-            배급자는 업로드와 배포에 집중하고, 번역가는 싱크와 퀄리티에 집중하도록 설계된 협업
-            플랫폼입니다. 역할 기반 워크플로와 자동 트래킹으로 프로젝트 현황을 실시간으로
-            파악하세요.
+            원본 영상을 선택한 언어로 자동 더빙하여 전 세계 시청자에게 전달하세요. 자연스러운 음성과
+            정확한 타이밍의 영상을 만들어 드립니다.
           </p>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap justify-center gap-3">
             <Button
               size="lg"
               onClick={() => trackEvent('sample_play', { lang: language })}
-              className="px-6"
+              className="group px-6 text-white"
+              style={{ backgroundColor: '#2E8B58', borderColor: '#2E8B58' }}
             >
-              <Play className="h-4 w-4" />
-              예제 영상 재생
+              <Play className="h-4 w-4 transition-transform group-hover:scale-110" />
+              Get started
             </Button>
-            <Button asChild variant="secondary" size="lg">
-              <Link to={routes.login}>로그인</Link>
-            </Button>
-            <Button asChild variant="outline" size="lg">
-              <Link to={routes.signup}>회원가입</Link>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="px-6"
+              style={{ borderColor: '#2E8B58', color: '#2E8B58' }}
+            >
+              <Link to={routes.login}>Learn more</Link>
             </Button>
           </div>
         </div>
-        <Card className="bg-surface-2 border-none p-8 shadow-soft">
-          <CardHeader>
-            <CardTitle>샘플 영상</CardTitle>
-            <CardDescription>
-              언어 토글로 오디오/자막 트랙을 즉시 전환하는 모의 화면입니다.
-            </CardDescription>
-          </CardHeader>
-          <TabsRoot
-            value={language}
-            onValueChange={(lang) => {
-              setLanguage(lang as SampleLanguage)
-              trackEvent('sample_language_toggle', { lang })
-            }}
-          >
-            <TabsList className="mb-6">
-              {Object.entries(samples).map(([code, value]) => (
-                <TabsTrigger key={code} value={code}>
-                  {value.label}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-            <TabsContent value={language}>
-              <SampleVideoMock language={language} />
-            </TabsContent>
-          </TabsRoot>
-          <div className="bg-surface-1 mt-6 space-y-3 rounded-2xl p-4">
-            <div className="text-muted flex items-center justify-between text-sm">
-              <span>상태</span>
-              <span className="text-foreground font-medium">Ready</span>
-            </div>
-            <div className="text-muted flex items-center justify-between text-sm">
-              <span>최근 업데이트</span>
-              <span className="text-foreground font-medium">방금 전</span>
+
+        <div className="relative mx-auto w-full max-w-4xl">
+          <div className="border-surface-3 bg-surface-1 relative w-full overflow-hidden rounded-3xl border shadow-soft">
+            <div
+              className={`absolute inset-0 bg-gradient-to-br ${activeSample.gradient} opacity-80`}
+            />
+            <div className="relative">
+              <div className="pb-[56.25%]" />
+              <div className="absolute inset-0 flex flex-col justify-between p-6 text-white">
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.35em] text-white/70">
+                      Preview Language
+                    </p>
+                    <h2 className="mt-2 text-2xl font-semibold">
+                      {activeSample.label} 음성 트랙 프리뷰
+                    </h2>
+                    <p className="mt-1 text-sm text-white/80">{activeSample.caption}</p>
+                  </div>
+                  <ToggleGroup
+                    type="single"
+                    value={language}
+                    onValueChange={(value) => {
+                      if (!value) return
+                      setLanguage(value as SampleLanguage)
+                      trackEvent('sample_language_toggle', { lang: value })
+                    }}
+                    className="rounded-full bg-black/30 p-1 backdrop-blur"
+                  >
+                    {(Object.keys(samples) as SampleLanguage[]).map((code) => (
+                      <ToggleGroupItem
+                        key={code}
+                        value={code}
+                        className="rounded-full px-4 py-2 text-xs font-medium uppercase tracking-wide text-white data-[state=on]:bg-white data-[state=on]:text-black"
+                      >
+                        {samples[code].label}
+                      </ToggleGroupItem>
+                    ))}
+                  </ToggleGroup>
+                </div>
+                <div className="flex flex-1 flex-col items-center justify-center">
+                  <button
+                    type="button"
+                    className="flex h-20 w-20 items-center justify-center rounded-full bg-white/20 backdrop-blur transition hover:scale-105"
+                    onClick={() => trackEvent('sample_play', { lang: language })}
+                  >
+                    <Play className="h-10 w-10 text-white" />
+                  </button>
+                  <p className="mt-4 text-sm text-white/80">
+                    토글을 눌러 언어를 전환하고, 더빙 품질을 바로 확인해보세요.
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-black/35 p-4 backdrop-blur">
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/60">Transcript</p>
+                  <p className="mt-2 text-sm text-white/90">{activeSample.transcript}</p>
+                </div>
+              </div>
             </div>
           </div>
-        </Card>
+        </div>
       </section>
 
       <section className="grid gap-6 md:grid-cols-3">
