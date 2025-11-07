@@ -11,7 +11,7 @@ type ToastPayload = {
   autoDismiss?: number
 }
 
-type ProjectCreationStep = 'upload' | 'settings-a' | 'settings-b'
+type ProjectCreationStep = 'source' | 'details'
 
 type UiState = {
   showToast: (toast: ToastPayload) => void
@@ -46,9 +46,9 @@ export const useUiStore = create<UiState>()(
     },
     projectCreation: {
       open: false,
-      step: 'upload',
+      step: 'source',
     },
-    openProjectCreation: (step = 'upload') =>
+    openProjectCreation: (step = 'source') =>
       set(
         {
           projectCreation: {
@@ -61,12 +61,13 @@ export const useUiStore = create<UiState>()(
       ),
     closeProjectCreation: () =>
       set(
-        {
+        (state) => ({
           projectCreation: {
+            ...state.projectCreation,
             open: false,
-            step: 'upload',
+            step: 'source',
           },
-        },
+        }),
         false,
         { type: 'ui/closeProjectCreation' },
       ),

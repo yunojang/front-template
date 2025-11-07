@@ -25,7 +25,7 @@ export const apiClient: KyInstance = ky.create({
         request.headers.set('Content-Type', 'application/json')
         const token = localStorage.getItem('demo-token')
         if (typeof token === 'string' && token.length > 0) {
-          request.headers.set('Authorization', `Bearer ${token}`)
+          request.headers.set('Authorization', `Bearer${token}`)
         }
         handleRequestLogging(request)
       },

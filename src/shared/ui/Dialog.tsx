@@ -28,10 +28,10 @@ export function DialogContent({
 }: DialogPrimitive.DialogContentProps) {
   return (
     <DialogPrimitive.Portal>
-      <DialogOverlay />
+      <DialogOverlay className="z-[50]" />
       <DialogPrimitive.Content
         className={cn(
-          'border-surface-3 bg-surface-1 fixed left-1/2 top-1/2 z-50 w-[90vw] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-3xl border p-6 shadow-2xl shadow-black/20 focus:outline-none',
+          'border-surface-3 bg-surface-1 fixed left-1/2 top-1/2 z-50 w-[90vw] max-w-2xl -translate-x-1/2 -translate-y-1/2 rounded-lg border p-6 shadow-2xl shadow-black/20 focus:outline-none',
           className,
         )}
         {...props}

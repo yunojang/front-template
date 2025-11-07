@@ -23,7 +23,7 @@ export default function ProjectsListPage() {
   return (
     <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-12">
       <header className="space-y-4">
-        <h1 className="text-foreground text-3xl font-semibold">프로젝트 목록</h1>
+        <h1 className="text-foreground text-3xl font-semibold">에피소드 목록</h1>
         <p className="text-muted text-sm">
           생성된 프로젝트 목록과 더빙 진행 상황을 조회합니다. 검색과 정렬은 현 상태를 유지하며 상세
           페이지로 이동합니다.

@@ -1,32 +1,28 @@
-import { UploadCloud } from 'lucide-react'
+import { AudioLines } from 'lucide-react'
 
 import { trackEvent } from '@/shared/lib/analytics'
 import { useUiStore } from '@/shared/store/useUiStore'
-import { Button } from '@/shared/ui/Button'
-import { Card, CardDescription, CardHeader, CardTitle } from '@/shared/ui/Card'
 
 export function UploadCard() {
   const openProjectCreation = useUiStore((state) => state.openProjectCreation)
 
   return (
-    <Card className="border-surface-4 bg-surface-1/70 border border-dashed p-8 text-center">
-      <CardHeader>
-        <CardTitle>프로젝트 생성</CardTitle>
-        <CardDescription>
-          원본 영상을 업로드하고 타겟 언어, 번역 사전, 번역가를 순차적으로 설정합니다.
-        </CardDescription>
-      </CardHeader>
-      <Button
-        variant="secondary"
-        className="mx-auto mt-4 w-48"
-        onClick={() => {
-          trackEvent('open_create_modal')
-          openProjectCreation('upload')
-        }}
-      >
-        <UploadCloud className="h-4 w-4" />
-        파일 업로드
-      </Button>
-    </Card>
+    <button
+      type="button"
+      className="bg-primary text-primary-foreground hover:bg-primary shadow-primary/30 translation hover:bg-primary-hover flex h-28 w-full items-center gap-4 rounded-[24px] px-8 text-left text-2xl font-semibold text-white shadow-lg outline-none transition-all duration-200 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+      onClick={() => {
+        trackEvent('open_create_modal')
+        openProjectCreation('source')
+      }}
+    >
+      <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20 text-white">
+        <AudioLines className="h-10 w-10" aria-hidden />
+      </span>
+
+      <div className="flex flex-col gap-1">
+        <span className="leading-tight">더빙·자막 만들기</span>
+        <span className="text-sm leading-tight">AI 자동 더빙 영상을 만들어보세요</span>
+      </div>
+    </button>
   )
 }

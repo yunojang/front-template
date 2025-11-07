@@ -13,7 +13,6 @@ export function Progress({ value, label }: ProgressProps) {
           style={{ width: `${Math.min(Math.max(value, 0), 100)}%` }}
         />
       </div>
-      <p className="text-muted text-xs font-semibold">{Math.round(value)}%</p>
     </div>
   )
 }
