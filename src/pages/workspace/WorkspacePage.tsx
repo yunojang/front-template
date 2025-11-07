@@ -71,7 +71,7 @@ export default function WorkspacePage() {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate('/login', { replace: true })
+      navigate('/auth/login', { replace: true })
     }
   }, [isAuthenticated, navigate])
 
